@@ -63,7 +63,7 @@ describe('main.fc contract tests', () => {
 
     const depositMessageResult = await myContract.sendDeposit(
       senderWallet.getSender(),
-      toNano(5),
+      toNano('5'),
     );
 
     expect(depositMessageResult.transactions).toHaveTransaction({
@@ -73,6 +73,7 @@ describe('main.fc contract tests', () => {
     });
 
     const balanceRequest = await myContract.getBalance();
+    console.log(balanceRequest.number);
 
     expect(balanceRequest.number).toBeGreaterThan(toNano('4.99'));
   });

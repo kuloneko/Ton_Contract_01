@@ -72,7 +72,7 @@ export class MainContract implements Contract {
   async getBalance(provider: ContractProvider) {
     const { stack } = await provider.get('balance', []);
     return {
-      number: stack.readNumber,
+      number: stack.readNumber(),
     };
   }
 
@@ -116,6 +116,14 @@ export class MainContract implements Contract {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: msg_body,
+    });
+  }
+
+  async sendDeploy(provider: ContractProvider, via: Sender, value: bigint) {
+    await provider.internal(via, {
+      value,
+      sendMode: SendMode.PAY_GAS_SEPARATELY,
+      body: beginCell().endCell(),
     });
   }
 }
